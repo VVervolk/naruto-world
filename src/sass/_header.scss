@@ -1,0 +1,26 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 85px;
+}
+
+.header__title {
+  color: #f97905;
+  text-decoration: none;
+  font-size: 30px;
+  font-family: Ninja Naruto;
+}
+
+.header__buttons-box {
+  display: flex;
+  gap: 130px;
+}
+.header__button {
+  color: #f97905;
+  padding: 0;
+  background-color: inherit;
+  border: 0;
+  font-size: 30px;
+  font-family: Ninja Naruto;
+  cursor: pointer;
+}
