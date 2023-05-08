@@ -1,8 +1,28 @@
 <header class="header">
   <a class="header__title" href="/src/index.html">Narutowiki</a>
-  <div class="header__buttons-box">
-    <button class="header__button">Find character</button
-    ><button class="header__button">Find clan</button
-    ><button class="header__button">Find viilage</button>
+  <nav class="header__nav-box">
+    <button class="nav__button">Find character</button
+    ><button class="nav__button">Find clan</button
+    ><button class="nav__button">Find viilage</button>
+  </nav>
+  <div class="header__account-box">
+    <button
+      type="button"
+      class="account__button"
+      data-bs-toggle="modal"
+      data-bs-target="#sign-up"
+    >
+      Sign Up
+    </button>
+    <button
+      class="account__button js-sign_in"
+      data-bs-toggle="modal"
+      data-bs-target="#sign-in"
+    >
+      Sign in
+    </button>
+
+    <p class="account__name hidden">Hi, ${user.email}</p>
+    <button class="account__button js-sign_out hidden">Sign out</button>
   </div>
 </header>

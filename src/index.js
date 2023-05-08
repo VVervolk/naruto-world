@@ -1,4 +1,6 @@
 import axios from 'axios';
+import './js/firebase.js';
+import * as bootstrap from 'bootstrap.native';
 
 const form = document.querySelector('.js-form');
 const box = document.querySelector('.js-box');

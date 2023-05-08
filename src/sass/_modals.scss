@@ -1,0 +1,56 @@
+.modal-content {
+  background-color: #f97905;
+}
+
+.modal-header {
+  border: 0;
+}
+
+.label-sign_up {
+  color: #000;
+  margin-left: 20px;
+  margin-bottom: 5px;
+}
+
+.input {
+  padding: 5px 10px;
+  width: 100%;
+
+  background-color: #ad5400;
+  border-radius: 18px;
+  border: none;
+
+  color: white;
+  font-size: 20px;
+
+  &:focus {
+    background-color: #141414;
+    outline: white solid 2px;
+  }
+  &.js-email,
+  &.js-email__log {
+    margin-bottom: 10px;
+  }
+}
+
+.button-sign_up {
+  width: 120px;
+  height: 30px;
+  display: block;
+  margin: auto;
+  margin-top: 20px;
+
+  background-color: #141414;
+  color: #f97905;
+
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+
+  &:focus,
+  &:hover {
+    color: white;
+    outline: white solid 2px;
+  }
+}

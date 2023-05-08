@@ -1,6 +1,7 @@
 .header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
   padding: 20px 85px;
 }
 
@@ -9,18 +10,63 @@
   text-decoration: none;
   font-size: 30px;
   font-family: Ninja Naruto;
+  transform: translateY(6px);
 }
 
-.header__buttons-box {
+.header__nav-box {
+  margin: auto;
   display: flex;
-  gap: 130px;
+  gap: 50px;
+  justify-content: space-between;
+  transform: translateY(4px);
+
+  .nav__button {
+    color: #f97905;
+    padding: 7.5px 7.5px 0;
+    background-color: inherit;
+    border: 0;
+    font-size: 30px;
+    font-family: Ninja Naruto;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+      outline: 2.5px solid #f97905;
+    }
+  }
 }
-.header__button {
+
+.header__account-box {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  .account__button {
+    padding: 10px;
+
+    color: #f97905;
+    font-size: 15px;
+    font-family: inherit;
+    font-weight: 500;
+
+    background-color: inherit;
+    border: 1px solid #f97905;
+    cursor: pointer;
+    transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover,
+    &:focus {
+      color: inherit;
+      background-color: #f97905;
+    }
+  }
+}
+
+.account__name {
+  margin: 0;
   color: #f97905;
-  padding: 0;
-  background-color: inherit;
-  border: 0;
-  font-size: 30px;
-  font-family: Ninja Naruto;
-  cursor: pointer;
+  font-size: 15px;
+  font-family: inherit;
+  font-weight: 500;
 }
