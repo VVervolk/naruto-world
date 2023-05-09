@@ -23,6 +23,33 @@
     </button>
 
     <p class="account__name hidden js-welcome"></p>
-    <button class="account__button js-sign_out hidden">Sign out</button>
+    <div class="btn-group hidden js-dropdown">
+      <button
+        type="button"
+        class="btn btn-secondary dropdown-toggle dropdown__main-button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        Menu
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end dropdown__menu">
+        <li>
+          <a
+            href="./history.html"
+            class="dropdown-item dropdown__item"
+            type="button"
+          >
+            Request`s history
+          </a>
+        </li>
+        <li>
+          <button
+            class="dropdown-item dropdown__item dropdown__sign-out js-sign_out"
+          >
+            Sign out
+          </button>
+        </li>
+      </ul>
+    </div>
   </div>
 </header>

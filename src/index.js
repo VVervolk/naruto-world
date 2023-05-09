@@ -1,13 +1,15 @@
 import axios from 'axios';
-import './js/firebase.js';
 import * as bootstrap from 'bootstrap.native';
+import './js/firebase.js';
 import { userCurrent, firestoreTest } from './js/firebase.js';
 
 const form = document.querySelector('.js-form');
 const box = document.querySelector('.js-box');
 const input = document.querySelector('.js-input');
 
-form.addEventListener('submit', getRequest);
+if (form) {
+  form.addEventListener('submit', getRequest);
+}
 
 function getRequest(evt) {
   evt.preventDefault();

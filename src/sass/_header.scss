@@ -70,3 +70,32 @@
   font-family: inherit;
   font-weight: 500;
 }
+
+.dropdown__main-button {
+  background-color: inherit;
+  color: #f97905;
+  border: 0;
+  outline: #f97905 solid 1px;
+
+  &:hover,
+  &:focus {
+    background-color: #f97905;
+    color: inherit;
+  }
+}
+
+.dropdown__menu {
+  padding: 0;
+  background-color: inherit;
+  outline: #f97905 solid 1px;
+}
+
+.dropdown__item {
+  color: #f97905;
+  text-align: right;
+  &:hover,
+  &:focus {
+    background-color: #f97905;
+    color: inherit;
+  }
+}

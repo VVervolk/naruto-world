@@ -25,6 +25,7 @@ const account = {
   signUpButton: document.querySelector('.js-sign_up'),
   signInButton: document.querySelector('.js-sign_in'),
   welcome: document.querySelector('.js-welcome'),
+  dropdown: document.querySelector('.js-dropdown'),
 };
 
 const firebaseConfig = {
@@ -52,13 +53,15 @@ account.signOutButton.addEventListener('click', logOut);
 
 onAuthStateChanged(auth, user => {
   if (user) {
+    userCurrent = user.email;
+    makeRequest();
     console.log(user.uid);
     account.signUpButton.classList.add('hidden');
     account.signInButton.classList.add('hidden');
-    account.signOutButton.classList.remove('hidden');
+    account.dropdown.classList.remove('hidden');
     account.welcome.classList.remove('hidden');
     account.welcome.textContent = `Hi, ${user.email}`;
-    return (userCurrent = user.email);
+    return userCurrent;
   } else {
     console.log('Anyone log in');
     account.signUpButton.classList.remove('hidden');
@@ -134,7 +137,6 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 const get = document.querySelector('.js-get-test');
-get.addEventListener('click', getData);
 
 export async function firestoreTest(user, userRequest) {
   try {
@@ -155,10 +157,27 @@ async function getData() {
   try {
     console.log(userCurrent);
     const docRef = await getDoc(doc(db, `requests/${userCurrent}`));
-    // docRef.forEach(doc => console.log(doc.id, ' => ', doc.data()));
     console.log(docRef.data());
-    // console.log('Document written with ID: ', docRef.id);
+    renderRequests(docRef.data());
   } catch (e) {
     console.error('Error adding document: ', e);
   }
+}
+
+function makeRequest() {
+  if (document.querySelector('.js-requests')) {
+    getData();
+  }
+}
+
+const requestsList = document.querySelector('.js-requestsList');
+
+function renderRequests(data) {
+  let markup = [];
+  for (const key in data) {
+    markup.push(`<li class="requests-item">${key} - ${data[key]}</li>`);
+  }
+  markup = markup.join('');
+
+  requestsList.insertAdjacentHTML('beforeend', markup);
 }

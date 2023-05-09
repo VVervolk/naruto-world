@@ -4,6 +4,11 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
+ul,
+ol {
+  list-style: none;
+}
+
 .hidden {
   position: absolute;
   width: 1px;
