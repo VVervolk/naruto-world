@@ -6,7 +6,7 @@ import {
   signOut,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore/lite';
+import { getFirestore } from 'firebase/firestore';
 
 const registration = {
   emailReg: document.querySelector('.js-email'),
@@ -44,6 +44,8 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+export let userCurrent = null;
+
 registration.formReg.addEventListener('submit', registerNewUser);
 logIn.formLogIn.addEventListener('submit', signIn);
 account.signOutButton.addEventListener('click', logOut);
@@ -56,6 +58,7 @@ onAuthStateChanged(auth, user => {
     account.signOutButton.classList.remove('hidden');
     account.welcome.classList.remove('hidden');
     account.welcome.textContent = `Hi, ${user.email}`;
+    return (userCurrent = user.email);
   } else {
     console.log('Anyone log in');
     account.signUpButton.classList.remove('hidden');
@@ -123,20 +126,39 @@ async function signIn(evt) {
 }
 
 //////////////////////////////////////////////
-import { collection, addDoc } from 'firebase/firestore';
+import {
+  doc,
+  setDoc,
+  serverTimestamp,
+  getDoc,
+  updateDoc,
+} from 'firebase/firestore';
+const get = document.querySelector('.js-get-test');
+get.addEventListener('click', getData);
 
-async function firebaseTest(user, request) {
+export async function firestoreTest(user, userRequest) {
   try {
-    const docRef = await addDoc(collection(db, `${user}`), {
-      first: 'Alan',
-      middle: 'Mathison',
-      last: 'Turing',
-      born: 1912,
-    });
-    console.log('Document written with ID: ', docRef.id);
+    const dateRequest = new Date().toUTCString();
+    const docRef = await updateDoc(
+      doc(db, `requests/${user}`),
+      {
+        [dateRequest]: `${userRequest}`,
+      },
+      { merge: true }
+    );
   } catch (e) {
     console.error('Error adding document: ', e);
   }
 }
 
-// firebaseTest();
+async function getData() {
+  try {
+    console.log(userCurrent);
+    const docRef = await getDoc(doc(db, `requests/${userCurrent}`));
+    // docRef.forEach(doc => console.log(doc.id, ' => ', doc.data()));
+    console.log(docRef.data());
+    // console.log('Document written with ID: ', docRef.id);
+  } catch (e) {
+    console.error('Error adding document: ', e);
+  }
+}

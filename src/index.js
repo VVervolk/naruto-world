@@ -1,6 +1,7 @@
 import axios from 'axios';
 import './js/firebase.js';
 import * as bootstrap from 'bootstrap.native';
+import { userCurrent, firestoreTest } from './js/firebase.js';
 
 const form = document.querySelector('.js-form');
 const box = document.querySelector('.js-box');
@@ -10,7 +11,7 @@ form.addEventListener('submit', getRequest);
 
 function getRequest(evt) {
   evt.preventDefault();
-
+  firestoreTest(userCurrent, input.value);
   getCharacter(input.value).then(data => createMarkup(data.data));
 }
 
