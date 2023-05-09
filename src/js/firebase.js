@@ -6,22 +6,26 @@ import {
   signOut,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore } from 'firebase/firestore/lite';
 
 const registration = {
-  emailForm: document.querySelector('.js-email'),
-  passwordForm: document.querySelector('.js-password'),
-  formTest: document.querySelector('.js-test'),
+  emailReg: document.querySelector('.js-email'),
+  passwordReg: document.querySelector('.js-password'),
+  formReg: document.querySelector('.js-test'),
 };
 
 const logIn = {
   emailLogIn: document.querySelector('.js-email__log'),
   passwordLogIn: document.querySelector('.js-password__log'),
-  FormLogIn: document.querySelector('.js-log-in'),
+  formLogIn: document.querySelector('.js-log-in'),
 };
 
-const accountBox = document.querySelector('.header__account-box');
-const signOutButton = document.querySelector('.js-sign_out');
+const account = {
+  signOutButton: document.querySelector('.js-sign_out'),
+  signUpButton: document.querySelector('.js-sign_up'),
+  signInButton: document.querySelector('.js-sign_in'),
+  welcome: document.querySelector('.js-welcome'),
+};
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCJMItHBqFDoLJDsSUvyhMYr2rtrI8eHJA',
@@ -40,27 +44,33 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-registration.formTest.addEventListener('submit', registerNewUser);
-logIn.FormLogIn.addEventListener('submit', signIn);
-signOutButton.addEventListener('click', logOut);
+registration.formReg.addEventListener('submit', registerNewUser);
+logIn.formLogIn.addEventListener('submit', signIn);
+account.signOutButton.addEventListener('click', logOut);
 
 onAuthStateChanged(auth, user => {
   if (user) {
-    const uid = user.uid;
-    const email = user.email;
-    console.log(uid);
+    console.log(user.uid);
+    account.signUpButton.classList.add('hidden');
+    account.signInButton.classList.add('hidden');
+    account.signOutButton.classList.remove('hidden');
+    account.welcome.classList.remove('hidden');
+    account.welcome.textContent = `Hi, ${user.email}`;
   } else {
     console.log('Anyone log in');
+    account.signUpButton.classList.remove('hidden');
+    account.signInButton.classList.remove('hidden');
+    account.signOutButton.classList.add('hidden');
+    account.welcome.classList.add('hidden');
   }
 });
 
-function registerNewUser(evt) {
+async function registerNewUser(evt) {
   evt.preventDefault();
-  registration.formTest.reset();
-  createUserWithEmailAndPassword(
+  await createUserWithEmailAndPassword(
     auth,
-    registration.emailForm.value,
-    registration.passwordForm.value
+    registration.emailReg.value,
+    registration.passwordReg.value
   )
     .then(userCredential => {
       // Signed in
@@ -73,10 +83,10 @@ function registerNewUser(evt) {
       const errorMessage = error.message;
       // ..
     });
+  location.reload();
 }
 
 function logOut(evt) {
-  console.log(evt);
   signOut(auth)
     .then(() => {
       console.log('Log out');
@@ -86,10 +96,10 @@ function logOut(evt) {
     });
 }
 
-function signIn(evt) {
+async function signIn(evt) {
   evt.preventDefault();
-  logIn.FormLogIn.reset();
-  signInWithEmailAndPassword(
+
+  await signInWithEmailAndPassword(
     auth,
     logIn.emailLogIn.value,
     logIn.passwordLogIn.value
@@ -100,7 +110,7 @@ function signIn(evt) {
       const user = userCredential.user;
       console.log(user);
       console.log('Signed in');
-      changeAccountBox(user);
+
       // ...
     })
     .catch(error => {
@@ -108,22 +118,25 @@ function signIn(evt) {
       const errorCode = error.code;
       const errorMessage = error.message;
     });
+
+  location.reload();
 }
 
-// function changeAccountBox() {
-//   //   accountBox.innerHTML = `<p class="account__name">Hi, ${user.email}</p>
-//   // <button class="account__button js-sign_out">Sign out</button>`;
+//////////////////////////////////////////////
+import { collection, addDoc } from 'firebase/firestore';
 
-//   const array = [...accountBox.children];
-//   console.log(array);
-//   array.map(child => {
-//     if (child.classList.contains('.hidden')) {
-//       child.classList.remove('.hidden');
-//     } else {
-//       child.classList.add('.hidden');
-//     }
-//     array.push(child);
-//     console.log(array);
-//   });
-// }
-// changeAccountBox();
+async function firebaseTest(user, request) {
+  try {
+    const docRef = await addDoc(collection(db, `${user}`), {
+      first: 'Alan',
+      middle: 'Mathison',
+      last: 'Turing',
+      born: 1912,
+    });
+    console.log('Document written with ID: ', docRef.id);
+  } catch (e) {
+    console.error('Error adding document: ', e);
+  }
+}
+
+// firebaseTest();

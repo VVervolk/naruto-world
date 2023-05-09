@@ -10,6 +10,7 @@ form.addEventListener('submit', getRequest);
 
 function getRequest(evt) {
   evt.preventDefault();
+
   getCharacter(input.value).then(data => createMarkup(data.data));
 }
 
